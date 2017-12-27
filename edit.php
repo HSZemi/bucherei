@@ -128,9 +128,15 @@ if(is_delete()){
     <link rel="stylesheet" href="css/bootstrap.journal.min.css">
       <link rel="stylesheet" href="css/font-awesome.min.css">
     <style>
-      .card-header {
+    .card-header {
         cursor: pointer;
-      }
+    }
+    footer{
+        margin-top: 2em;
+    }
+    abbr[title] {
+        text-decoration: none;
+    }
     </style>
   </head>
 
@@ -267,6 +273,10 @@ if(is_delete()){
           </form>
         </div>
       </div>
+
+      <footer class="text-center text-muted">
+      »Bucherei« ist freie Software, veröffentlicht unter Open-Source-Lizenz auf <a href="https://github.com/hszemi/bucherei" target="_blank"><abbr title="github.com/hszemi/bucherei">Github</abbr></a>
+      </footer>
 
     </div>
 

@@ -1,4 +1,4 @@
-# bucherei
+# Bucherei
 Bucher suchen, Bucher hinzufugen, Bucher loschen.
 
 # Setup
