@@ -69,18 +69,66 @@ if (is_request()) {
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.journal.min.css">
-      <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/theme.bootstrap_4.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
     <style>
-      .card-header {
+    .card-header {
         cursor: pointer;
-      }
+    }
+    #results {
+        padding: 0;
+    }
+    footer{
+        margin-top: 2em;
+    }
+    /*table.tablesorter thead tr .header {
+	background-image: url(css/bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+    }
+    table.tablesorter thead tr .headerSortUp {
+        background-image: url(css/asc.gif);
+    }
+    table.tablesorter thead tr .headerSortDown {
+        background-image: url(css/desc.gif);
+    }*/
+    @media print {    
+        .no-print, .no-print * {
+            display: none !important;
+        }
+        .th-nr:before{
+            content: "Nr";
+        }
+        .th-autor:before{
+            content: "Autor";
+        }
+        .th-titel:before{
+            content: "Titel";
+        }
+        .th-sparte:before{
+            content: "Sparte";
+        }
+        .th-jahr:before{
+            content: "Jahr";
+        }
+        .th-bereich:before{
+            content: "Bereich";
+        }
+        th div{
+            display: none;
+        }
+    }
+    abbr[title] {
+        text-decoration: none;
+    }
     </style>
   </head>
 
   <body>
     <?php include "nav.html";?>
     <div class="container-fluid">
-      <div class="card">
+      <div class="card no-print">
         <div class="card-header" onclick="toggleSearch()">
           Suche
         </div>
@@ -156,22 +204,22 @@ if (is_request()) {
       </div>
 
       <div class="card">
-        <div class="card-header" onclick="toggleResults()">
+        <div class="card-header no-print" onclick="toggleResults()">
           Ergebnisse
         </div>
         <div class="card-body" id="results">
-          <table class="table">
+          <table class="table table-bordered table-sm" id="resulttable">
             <thead>
               <tr>
-                <th>Nummer</th>
-                <th>Autor</th>
-                <th>Titel</th>
-                <th>Sparte</th>
-                <th>Erscheinungsjahr</th>
-                <th>Verlag</th>
-                <th>Beschreibung</th>
-                <th>Bereich</th>
-                <th></th>
+                <th class="th-nr">Nr</th>
+                <th class="th-autor">Autor</th>
+                <th class="th-titel">Titel</th>
+                <th class="th-sparte">Sparte</th>
+                <th title="Erscheinungsjahr" class="th-jahr">Jahr</th>
+                <th class="no-print">Verlag</th>
+                <th class="no-print">Beschreibung</th>
+                <th class="th-bereich">Bereich</th>
+                <th class="no-print" data-sorter="false"></th>
               </tr>
             </thead>
             <tbody>
@@ -189,10 +237,10 @@ if (is_request()) {
             <td>$rtitel</td>
             <td>$rsparte</td>
             <td>$rerscheinungsjahr</td>
-            <td>$rverlag</td>
-            <td>$rbeschreibung</td>
+            <td class='no-print'>$rverlag</td>
+            <td class='no-print'>$rbeschreibung</td>
             <td>$rbereich</td>
-            <td><a href='./edit.php?id=$rid'><i class='fa fa-pencil-square-o' aria-hidden='true'></i>
+            <td class='no-print'><a href='./edit.php?id=$rid'><i class='fa fa-pencil-square-o' aria-hidden='true'></i>
 </a></td>
         </tr>";
     }
@@ -209,13 +257,21 @@ if (is_request()) {
         </div>
       </div>
 
+      <footer class="text-center text-muted">
+      »Bucherei« ist freie Software, veröffentlicht unter Open-Source-Lizenz auf <a href="https://github.com/hszemi/bucherei" target="_blank"><abbr title="github.com/hszemi/bucherei">Github</abbr></a>
+      </footer>
 
     </div>
 
     <script src="js/jquery-3.2.1.min.js" ></script>
     <script src="js/popper.min.js" ></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.tablesorter.min.js"></script>
     <script type="text/javascript">
+      $(function(){ 
+        $("#resulttable").tablesorter({theme : "bootstrap"}); 
+      }); 
+      
       function resetForm() {
         $('#inputId').val('');
         $('#inputNummer').val('');
