@@ -22,13 +22,10 @@ function is_request()
     return isset($_POST['id']) && isset($_POST['nummer']) && isset($_POST['autor']) && isset($_POST['titel']) && isset($_POST['sparte']) && isset($_POST['erscheinungsjahr']) && isset($_POST['verlag']) && isset($_POST['beschreibung']) && isset($_POST['bereich']);
 }
 
-$servername = "localhost";
-$username   = "buch";
-$password   = "BUCH";
-$dbname     = "buch";
+include 'dbconfig.php';
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli(SERVER_NAME, USER_NAME, USER_PASSWORD, DB_NAME);
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

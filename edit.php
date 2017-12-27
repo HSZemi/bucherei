@@ -33,13 +33,10 @@ function is_deleted(){
     return isset($_GET['deleted']) && !isset($_POST['save']);
 }
 
-$servername = "localhost";
-$username   = "buch";
-$password   = "BUCH";
-$dbname     = "buch";
+include 'dbconfig.php';
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli(SERVER_NAME, USER_NAME, USER_PASSWORD, DB_NAME);
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
