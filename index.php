@@ -41,6 +41,7 @@ $erscheinungsjahr = "";
 $verlag           = "";
 $beschreibung     = "";
 $bereich          = "";
+$rowcount         = 0;
 
 if (is_request()) {
     $id               = $_POST['id'];
@@ -207,7 +208,7 @@ if (is_request()) {
 
       <div class="card">
         <div class="card-header no-print" onclick="toggleResults()">
-          Ergebnisse
+          Ergebnisse (<span id="rowcount">lädt…</span>)
         </div>
         <div class="card-body" id="results">
           <table class="table table-bordered table-sm" id="resulttable">
@@ -249,6 +250,7 @@ if (is_request()) {
     if(!$has_result) {
         echo "<tr><td colspan='8'>0 results</td></tr>";
     }
+    $rowcount = $stmt->num_rows;
     $stmt->close();
 }
 ?>
@@ -271,7 +273,8 @@ if (is_request()) {
     <script src="js/jquery.tablesorter.min.js"></script>
     <script type="text/javascript">
       $(function(){ 
-        $("#resulttable").tablesorter({theme : "bootstrap"}); 
+        $("#resulttable").tablesorter({theme : "bootstrap"});
+        $("#rowcount").text('<?php echo $rowcount; ?>');
       }); 
       
       function resetForm() {
