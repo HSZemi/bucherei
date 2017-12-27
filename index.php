@@ -95,18 +95,6 @@ if (is_request()) {
     footer{
         margin-top: 2em;
     }
-    /*table.tablesorter thead tr .header {
-	background-image: url(css/bg.gif);
-	background-repeat: no-repeat;
-	background-position: center right;
-	cursor: pointer;
-    }
-    table.tablesorter thead tr .headerSortUp {
-        background-image: url(css/asc.gif);
-    }
-    table.tablesorter thead tr .headerSortDown {
-        background-image: url(css/desc.gif);
-    }*/
     @media print {    
         .no-print, .no-print * {
             display: none !important;
