@@ -58,6 +58,14 @@ if (is_request()) {
         $stmt = $conn->prepare("SELECT id, Nummer, Autor, Titel, Sparte, Erscheinungsjahr, Verlag, Beschreibung, Bereich FROM buch WHERE ID=?");
         $stmt->bind_param("i", $id);
     } else {
+        $a="%$nummer%";
+        $b="%$autor%";
+        $c="%$titel%";
+        $d="%$sparte%";
+        $e="%$erscheinungsjahr%";
+        $f="%$verlag%";
+        $g="%$beschreibung%";
+        $h="%$bereich%";
         $stmt = $conn->prepare("SELECT id, Nummer, Autor, Titel, Sparte, Erscheinungsjahr, Verlag, Beschreibung, Bereich 
         FROM buch 
         WHERE Nummer LIKE ?
@@ -68,7 +76,7 @@ if (is_request()) {
         AND Verlag like ?
         AND Beschreibung like ? 
         AND Bereich like ?");
-        $stmt->bind_param("ssssssss", $a="%$nummer%",$b="%$autor%",$c="%$titel%",$d="%$sparte%",$e="%$erscheinungsjahr%",$f="%$verlag%",$g="%$beschreibung%",$h="%$bereich%");
+        $stmt->bind_param("ssssssss", $a,$b,$c,$d,$e,$f,$g,$h);
     }
 }
 
