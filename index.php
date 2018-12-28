@@ -216,7 +216,7 @@ if (is_request()) {
 
       <div class="card">
         <div class="card-header no-print" onclick="toggleResults()">
-          Ergebnisse (<span id="rowcount">lädt…</span>)
+          Ergebnisse (<span id="rowcount">lädt…</span>) <button class="btn btn-link" onclick="event.stopPropagation();downloadTable()">Tabelle exportieren</button>
         </div>
         <div class="card-body" id="results">
           <table class="table table-bordered table-sm" id="resulttable">
@@ -301,6 +301,35 @@ if (is_request()) {
       }
       function toggleResults() {
         $('#results').slideToggle();
+      }
+      function downloadTable() {
+          let csvContent = "data:text/csv;charset=utf-8,";
+          $('#resulttable tr').each(function(idx, tableRow){
+              let rowArray = getFields(tableRow, 'th');
+              let row = rowArray.join("\t");
+              if(row !== "") {
+                  csvContent += row + "\r\n";
+              }
+              rowArray = getFields(tableRow, 'td');
+              row = rowArray.join("\t");
+              if(row !== "") {
+                  csvContent += row + "\r\n";
+              }
+          });
+          let encodedUri = encodeURI(csvContent);
+          let link = document.createElement("a");
+          link.setAttribute("href", encodedUri);
+          link.setAttribute("download", "tabelle.csv");
+          document.body.appendChild(link); // Required for FF
+
+          link.click(); // This will download the data file named "tabelle.csv".
+      }
+      function getFields(tableRow, type){
+          let retval = [];
+          $(tableRow).find(type).each(function(idx, item){
+              retval.push($(item).text().replace("\t", " "));
+          });
+          return retval.slice(0, -1);
       }
     $(function(){
     <?php
