@@ -7,5 +7,6 @@ CREATE TABLE `buch` (
   `Erscheinungsjahr` varchar(255) COLLATE utf8mb4_german2_ci DEFAULT NULL,
   `Verlag` varchar(255) COLLATE utf8mb4_german2_ci DEFAULT NULL,
   `Beschreibung` text COLLATE utf8mb4_german2_ci,
-  `Bereich` varchar(255) COLLATE utf8mb4_german2_ci DEFAULT NULL
+  `Bereich` varchar(255) COLLATE utf8mb4_german2_ci DEFAULT NULL,
+  `Entliehen` boolean DEFAULT FALSE
 ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_german2_ci;

@@ -66,7 +66,7 @@ if (is_request()) {
         $f="%$verlag%";
         $g="%$beschreibung%";
         $h="%$bereich%";
-        $stmt = $conn->prepare("SELECT id, Nummer, Autor, Titel, Sparte, Erscheinungsjahr, Verlag, Beschreibung, Bereich 
+        $stmt = $conn->prepare("SELECT id, Nummer, Autor, Titel, Sparte, Erscheinungsjahr, Verlag, Beschreibung, Bereich, Entliehen 
         FROM buch 
         WHERE Nummer LIKE ?
         AND Autor like ?
@@ -230,6 +230,7 @@ if (is_request()) {
                 <th class="no-print">Verlag</th>
                 <th class="no-print">Beschreibung</th>
                 <th class="th-bereich">Bereich</th>
+                <th class="th-entliehen" data-sorter="false">Entliehen</th>
                 <th class="no-print" data-sorter="false"></th>
               </tr>
             </thead>
@@ -238,10 +239,12 @@ if (is_request()) {
               <?php
 if (is_request()) {
     $stmt->execute();
-    $stmt->bind_result($rid, $rnummer, $rautor, $rtitel, $rsparte, $rerscheinungsjahr, $rverlag, $rbeschreibung, $rbereich);
+    $stmt->bind_result($rid, $rnummer, $rautor, $rtitel, $rsparte, $rerscheinungsjahr, $rverlag, $rbeschreibung, $rbereich, $rentliehen);
     $has_result = false;
     while ($stmt->fetch()) {
         $has_result = true;
+        $entliehen = $rentliehen === 0 ? "Nein" : "Ja";
+        $btn_class = $rentliehen === 0 ? "btn-secondary" : "btn-primary";
         echo "<tr>
             <td>$rnummer</td>
             <td>$rautor</td>
@@ -251,6 +254,7 @@ if (is_request()) {
             <td class='no-print'>$rverlag</td>
             <td class='no-print'>$rbeschreibung</td>
             <td>$rbereich</td>
+            <td><button class='btn $btn_class' onclick='toggleEntliehen(this, $rid)'>$entliehen</button></td>
             <td class='no-print'><a href='./edit.php?id=$rid'><i class='fa fa-pencil-square-o' aria-hidden='true'></i>
 </a></td>
         </tr>";
@@ -331,6 +335,22 @@ if (is_request()) {
           });
           return retval.slice(0, -1);
       }
+
+        function toggleEntliehen(self, id) {
+            $.post('toggleEntliehen.php', {"id": id}, function (response) {
+                let data = JSON.parse(response);
+                if (data.status === "OK") {
+                    let text = data.entliehen === "1" ? "Ja" : "Nein";
+                    let btn_class = data.entliehen === "1" ? "btn-primary" : "btn-secondary";
+                    $(self).text(text);
+                    $(self).removeClass('btn-primary');
+                    $(self).removeClass('btn-secondary');
+                    $(self).addClass(btn_class);
+                } else {
+                    alert("Fehler: " + data.message);
+                }
+            });
+        }
     $(function(){
     <?php
 if (is_request()) {
